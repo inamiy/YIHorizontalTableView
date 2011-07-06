@@ -32,7 +32,7 @@ typedef NSUInteger AGTableViewOrientation;
     AGTableViewOrientation _tableViewOrientation;
 }
 
-@property AGTableViewOrientation tableViewOrientation;
+@property (nonatomic, assign) AGTableViewOrientation tableViewOrientation;
 @property (nonatomic, assign) id<UITableViewDataSource> orientedTableViewDataSource;
 
 @end
