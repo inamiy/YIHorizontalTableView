@@ -42,28 +42,18 @@
     if (_tableViewOrientation != anOrientation)
     {
         _tableViewOrientation = anOrientation;
-        CGFloat angle = 0.0;
         if (_tableViewOrientation == kAGTableViewOrientationHorizontal)
         {
-            angle = -M_PI/2.0;
             CGRect frame = self.frame;
-            frame.origin = CGPointMake(abs(frame.size.width - frame.size.height) / 2.0, 
-                (frame.size.height - frame.size.width) / 2.0);
+            self.transform = CGAffineTransformMakeRotation(-M_PI/2.0);
             super.frame = frame;
         }
-        self.transform = CGAffineTransformMakeRotation(angle);
+        else
+        {
+            self.transform = CGAffineTransformMakeRotation(0.0);
+        }
         [self reloadData];
     }
-}
-
-- (void)setFrame:(CGRect)aFrame
-{
-    if (_tableViewOrientation == kAGTableViewOrientationHorizontal)
-    {
-        aFrame.origin = CGPointMake((aFrame.size.width - aFrame.size.height) / 2.0, 
-            (aFrame.size.height - aFrame.size.width) / 2.0);
-    }
-    [super setFrame:aFrame];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector
