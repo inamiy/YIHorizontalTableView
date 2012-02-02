@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AGOrientedTableView.h"
+#import "YIHorizontalTableView.h"
 
 @interface testViewController : UIViewController <UITableViewDataSource>
 {
-AGOrientedTableView *_tableView;
+    YIHorizontalTableView *_tableView;
 }
 
-@property (retain) IBOutlet AGOrientedTableView *tableView;
+@property (retain) IBOutlet YIHorizontalTableView *tableView;
 
 @end
 

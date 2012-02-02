@@ -33,11 +33,14 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-    _tableView.orientedTableViewDataSource = self;
-    _tableView.tableViewOrientation = kAGTableViewOrientationHorizontal;
+    
+    _tableView = [[YIHorizontalTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.scrollIndicatorPosition = YIHorizontalTableViewScrollIndicatorPositionBottom;
+    
+    [self.view addSubview:_tableView];
+    [_tableView release];
 }
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
@@ -63,7 +66,7 @@
 #pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)anIndexPath
