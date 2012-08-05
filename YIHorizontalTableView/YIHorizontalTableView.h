@@ -20,7 +20,7 @@
 typedef enum {
     YIHorizontalTableViewScrollIndicatorPositionDefault = 0,
     YIHorizontalTableViewScrollIndicatorPositionTop,
-    YIHorizontalTableViewScrollIndicatorPositionBottom
+    YIHorizontalTableViewScrollIndicatorPositionBottom = YIHorizontalTableViewScrollIndicatorPositionDefault
 } YIHorizontalTableViewScrollIndicatorPosition;
 
 

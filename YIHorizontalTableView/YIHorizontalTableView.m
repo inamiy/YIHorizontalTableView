@@ -14,6 +14,15 @@
 
 @synthesize scrollIndicatorPosition = _scrollIndicatorPosition;
 
+- (id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style
+{
+    self = [super initWithFrame:frame style:style];
+    if (self) {
+        self.frame = frame; // call custom setFrame
+    }
+    return self;
+}
+
 #pragma mark -
 
 #pragma mark Accessors
@@ -55,9 +64,8 @@
             self.scrollIndicatorInsets = UIEdgeInsetsZero;
             break;
         case YIHorizontalTableViewScrollIndicatorPositionBottom:
-            self.scrollIndicatorInsets = UIEdgeInsetsMake(self.frame.size.height-10, 0, 0, 0);
-            break;
         default:
+            self.scrollIndicatorInsets = UIEdgeInsetsMake(self.frame.size.height-10, 0, 0, 0);
             break;
     }
 }
