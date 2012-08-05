@@ -34,7 +34,8 @@
 {
     [super viewDidLoad];
     
-    _tableView = [[YIHorizontalTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    _tableView = [[YIHorizontalTableView alloc] init];
+    _tableView.frame = CGRectMake(50, 100, 200, 100);
     _tableView.dataSource = self;
     _tableView.scrollIndicatorPosition = YIHorizontalTableViewScrollIndicatorPositionBottom;
     

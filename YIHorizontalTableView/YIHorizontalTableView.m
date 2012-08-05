@@ -26,10 +26,11 @@
 
 - (void)setFrame:(CGRect)aFrame
 {
-    [super setFrame:CGRectMake(aFrame.origin.x+(aFrame.size.width-aFrame.size.height)/2.0, 
-                               aFrame.origin.y+(aFrame.size.height-aFrame.size.width)/2.0,
-                               aFrame.size.height,
-                               aFrame.size.width)];
+//    [super setFrame:CGRectMake(aFrame.origin.x+(aFrame.size.width-aFrame.size.height)/2.0, 
+//                               aFrame.origin.y+(aFrame.size.height-aFrame.size.width)/2.0,
+//                               aFrame.size.height,
+//                               aFrame.size.width)];
+    [super setFrame:aFrame];
     self.transform = CGAffineTransformMakeRotation(-M_PI/2.0); // transform after setFrame
     
     self.scrollIndicatorPosition = _scrollIndicatorPosition;
