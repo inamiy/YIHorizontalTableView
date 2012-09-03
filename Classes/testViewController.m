@@ -42,6 +42,12 @@
     
     [self.view addSubview:_tableView];
     [_tableView release];
+    
+    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"Select Index 10" forState:UIControlStateNormal];
+    [button sizeToFit];
+    [self.view addSubview:button];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -63,6 +69,16 @@
 
 - (void)dealloc {
     [super dealloc];
+}
+
+#pragma mark -
+
+#pragma mark UIButton
+
+- (void)handleButton:(UIButton*)button
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:10 inSection:0];
+    [_tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 
 #pragma mark -

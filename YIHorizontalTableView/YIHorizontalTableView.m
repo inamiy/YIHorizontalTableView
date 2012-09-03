@@ -35,10 +35,6 @@
 
 - (void)setFrame:(CGRect)aFrame
 {
-//    [super setFrame:CGRectMake(aFrame.origin.x+(aFrame.size.width-aFrame.size.height)/2.0, 
-//                               aFrame.origin.y+(aFrame.size.height-aFrame.size.width)/2.0,
-//                               aFrame.size.height,
-//                               aFrame.size.width)];
     [super setFrame:aFrame];
     self.transform = CGAffineTransformMakeRotation(-M_PI/2.0); // transform after setFrame
     
@@ -74,21 +70,28 @@
 
 #pragma mark UITableView
 
+- (void)selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition
+{
+    [super selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
+}
+
 - (void)scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated
 {
-    UITableViewCell* cell = [self cellForRowAtIndexPath:indexPath];
+    CGRect cellFrame = [self rectForRowAtIndexPath:indexPath];
     
     CGPoint offset = CGPointZero;
     
     switch (scrollPosition) {
         case UITableViewScrollPositionTop:
-            offset = CGPointMake(0, cell.frame.origin.y);
+            offset = CGPointMake(0, cellFrame.origin.y);
             break;
         case UITableViewScrollPositionBottom:
-            offset = CGPointMake(0, cell.frame.origin.y-self.frame.size.width+cell.frame.size.height);
+            offset = CGPointMake(0, cellFrame.origin.y-self.frame.size.width+cellFrame.size.height);
             break;
         case UITableViewScrollPositionMiddle:
-            offset = CGPointMake(0, cell.frame.origin.y+(-self.frame.size.width+cell.frame.size.height)/2);
+            offset = CGPointMake(0, cellFrame.origin.y+(-self.frame.size.width+cellFrame.size.height)/2);
             break;
         default:
             break;
