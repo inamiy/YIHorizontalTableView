@@ -94,6 +94,7 @@
             offset = CGPointMake(0, cellFrame.origin.y+(-self.frame.size.width+cellFrame.size.height)/2);
             break;
         default:
+            return;
             break;
     }
     [super setContentOffset:offset animated:animated];
