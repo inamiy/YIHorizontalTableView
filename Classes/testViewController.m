@@ -37,6 +37,7 @@
     _tableView = [[YIHorizontalTableView alloc] init];
     _tableView.frame = CGRectMake(50, 100, 200, 100);
     _tableView.dataSource = self;
+    _tableView.delegate = self;
     _tableView.scrollIndicatorPosition = YIHorizontalTableViewScrollIndicatorPositionBottom;
     
     [self.view addSubview:_tableView];
@@ -65,6 +66,14 @@
 }
 
 #pragma mark -
+
+#pragma mark UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 100;
@@ -84,9 +93,11 @@
     return result;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 1;
+    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 }
 
 @end

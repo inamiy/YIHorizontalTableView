@@ -72,6 +72,32 @@
 
 #pragma mark -
 
+#pragma mark UITableView
+
+- (void)scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated
+{
+    UITableViewCell* cell = [self cellForRowAtIndexPath:indexPath];
+    
+    CGPoint offset = CGPointZero;
+    
+    switch (scrollPosition) {
+        case UITableViewScrollPositionTop:
+            offset = CGPointMake(0, cell.frame.origin.y);
+            break;
+        case UITableViewScrollPositionBottom:
+            offset = CGPointMake(0, cell.frame.origin.y-self.frame.size.width+cell.frame.size.height);
+            break;
+        case UITableViewScrollPositionMiddle:
+            offset = CGPointMake(0, cell.frame.origin.y+(-self.frame.size.width+cell.frame.size.height)/2);
+            break;
+        default:
+            break;
+    }
+    [super setContentOffset:offset animated:animated];
+}
+
+#pragma mark -
+
 #pragma mark NSObject
 
 - (BOOL)respondsToSelector:(SEL)aSelector

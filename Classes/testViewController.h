@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "YIHorizontalTableView.h"
 
-@interface testViewController : UIViewController <UITableViewDataSource>
+@interface testViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
     YIHorizontalTableView *_tableView;
 }
