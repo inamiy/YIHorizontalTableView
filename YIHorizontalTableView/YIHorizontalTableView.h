@@ -30,4 +30,14 @@ typedef enum {
 
 @property (nonatomic, assign) YIHorizontalTableViewScrollIndicatorPosition scrollIndicatorPosition;
 
+//
+// alternative getter methods to not interfere with setter methods
+// (NOTE: 'frame' property can be obtained from original getter method too)
+//
+- (CGRect)yi_frame; // = original 'frame' property
+- (UIEdgeInsets)yi_scrollIndicatorInsets;
+- (UIEdgeInsets)yi_contentInset;
+- (CGSize)yi_contentSize;
+- (CGPoint)yi_contentOffset;
+
 @end

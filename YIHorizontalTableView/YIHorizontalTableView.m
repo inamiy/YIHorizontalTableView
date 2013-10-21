@@ -27,30 +27,6 @@
 
 #pragma mark Accessors
 
-- (void)setDataSource:(id <UITableViewDataSource>)aDataSource
-{
-    _horizontalDataSource = aDataSource;
-    [super setDataSource:self];
-}
-
-- (void)setFrame:(CGRect)aFrame
-{
-    [super setFrame:aFrame];
-    self.transform = CGAffineTransformMakeRotation(-M_PI/2.0); // transform after setFrame
-    
-    self.scrollIndicatorPosition = _scrollIndicatorPosition;
-}
-
-- (void)setScrollIndicatorInsets:(UIEdgeInsets)edgeInsets
-{
-    [super setScrollIndicatorInsets:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
-}
-
-- (void)setContentInset:(UIEdgeInsets)edgeInsets
-{
-    [super setContentInset:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
-}
-
 - (void)setScrollIndicatorPosition:(YIHorizontalTableViewScrollIndicatorPosition)scrollIndicatorPosition
 {
     _scrollIndicatorPosition = scrollIndicatorPosition;
@@ -66,6 +42,62 @@
     }
 }
 
+#pragma mark Accessors (Override)
+
+- (void)setDataSource:(id <UITableViewDataSource>)aDataSource
+{
+    _horizontalDataSource = aDataSource;
+    [super setDataSource:self];
+}
+
+- (CGRect)yi_frame
+{
+    return [super frame];
+}
+
+- (void)setFrame:(CGRect)aFrame
+{
+    [super setFrame:aFrame];
+    self.transform = CGAffineTransformMakeRotation(-M_PI/2.0); // transform after setFrame
+    
+    self.scrollIndicatorPosition = _scrollIndicatorPosition;
+}
+
+- (UIEdgeInsets)yi_scrollIndicatorInsets
+{
+    UIEdgeInsets insets = [super scrollIndicatorInsets];
+    return UIEdgeInsetsMake(insets.right, insets.top, insets.left, insets.bottom);
+}
+
+- (void)setScrollIndicatorInsets:(UIEdgeInsets)edgeInsets
+{
+    [super setScrollIndicatorInsets:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
+}
+
+- (UIEdgeInsets)yi_contentInset
+{
+    UIEdgeInsets insets = [super contentInset];
+    return UIEdgeInsetsMake(insets.right, insets.top, insets.left, insets.bottom);
+}
+
+- (void)setContentInset:(UIEdgeInsets)edgeInsets
+{
+    [super setContentInset:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
+}
+
+- (CGSize)yi_contentSize
+{
+    CGSize contentSize = [super contentSize];
+    return CGSizeMake(contentSize.height, contentSize.width);
+}
+
+// NOTE: don't override getter method which is often used in super methods internally
+- (CGPoint)yi_contentOffset
+{
+    CGPoint contentOffset = [super contentOffset];
+    return CGPointMake(contentOffset.y, -contentOffset.x);
+}
+
 #pragma mark -
 
 #pragma mark UIScrollView
@@ -74,6 +106,16 @@
 {
     CGPoint newOffset = CGPointMake(-contentOffset.y, contentOffset.x);
     [super setContentOffset:newOffset animated:animated];
+}
+
+- (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated
+{
+    // comment-out: scrollRectToVisible uses overridden-setContentOffset internally
+//    CGRect newRect = CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
+//    [super scrollRectToVisible:newRect animated:animated];
+    
+    // FIXME: evaluate rect.size to adjust contentOffset more precisely
+    [self setContentOffset:rect.origin animated:animated];
 }
 
 #pragma mark -
@@ -108,16 +150,6 @@
             break;
     }
     [super setContentOffset:offset animated:animated];
-}
-
-- (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated
-{
-    // comment-out: scrollRectToVisible uses overridden-setContentOffset internally
-//    CGRect newRect = CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
-//    [super scrollRectToVisible:newRect animated:animated];
-    
-    // FIXME: evaluate rect.size to adjust contentOffset more precisely
-    [self setContentOffset:rect.origin animated:animated];
 }
 
 #pragma mark -
