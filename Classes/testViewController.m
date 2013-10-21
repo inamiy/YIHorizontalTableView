@@ -43,11 +43,32 @@
     [self.view addSubview:_tableView];
     [_tableView release];
     
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [button addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"Select Index 10" forState:UIControlStateNormal];
-    [button sizeToFit];
-    [self.view addSubview:button];
+    {
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"Select Index 10" forState:UIControlStateNormal];
+        [button sizeToFit];
+#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+        CGRect frame = button.frame;
+        frame.origin.y += 20;
+        button.frame = frame;
+#endif
+        [self.view addSubview:button];
+    }
+    
+    {
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self action:@selector(handleScrollButton:) forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:@"Scroll to visible" forState:UIControlStateNormal];
+        [button sizeToFit];
+#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+        CGRect frame = button.frame;
+        frame.origin.x += 200;
+        frame.origin.y += 20;
+        button.frame = frame;
+#endif
+        [self.view addSubview:button];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -79,6 +100,11 @@
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:10 inSection:0];
     [_tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+}
+
+- (void)handleScrollButton:(UIButton*)button
+{
+    [_tableView scrollRectToVisible:CGRectMake(250, 0, 1, 1) animated:YES]; // NOTE: size={1,1} is required
 }
 
 #pragma mark -
