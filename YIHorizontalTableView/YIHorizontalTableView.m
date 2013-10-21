@@ -68,6 +68,16 @@
 
 #pragma mark -
 
+#pragma mark UIScrollView
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
+{
+    CGPoint newOffset = CGPointMake(-contentOffset.y, contentOffset.x);
+    [super setContentOffset:newOffset animated:animated];
+}
+
+#pragma mark -
+
 #pragma mark UITableView
 
 - (void)selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition
@@ -102,16 +112,12 @@
 
 - (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated
 {
-    CGRect newRect = CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
-    [super scrollRectToVisible:newRect animated:animated];
-}
-
-#pragma mark UIScrollView
-
-- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
-{
-    CGPoint newOffset = CGPointMake(contentOffset.y, contentOffset.x);
-    [super setContentOffset:newOffset animated:animated];
+    // comment-out: scrollRectToVisible uses overridden-setContentOffset internally
+//    CGRect newRect = CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
+//    [super scrollRectToVisible:newRect animated:animated];
+    
+    // FIXME: evaluate rect.size to adjust contentOffset more precisely
+    [self setContentOffset:rect.origin animated:animated];
 }
 
 #pragma mark -
