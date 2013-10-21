@@ -106,6 +106,14 @@
     [super scrollRectToVisible:newRect animated:animated];
 }
 
+#pragma mark UIScrollView
+
+- (void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
+{
+    CGPoint newOffset = CGPointMake(contentOffset.y, contentOffset.x);
+    [super setContentOffset:newOffset animated:animated];
+}
+
 #pragma mark -
 
 #pragma mark NSObject
