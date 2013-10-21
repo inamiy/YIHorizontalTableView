@@ -100,6 +100,12 @@
     [super setContentOffset:offset animated:animated];
 }
 
+- (void)scrollRectToVisible:(CGRect)rect animated:(BOOL)animated
+{
+    CGRect newRect = CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
+    [super scrollRectToVisible:newRect animated:animated];
+}
+
 #pragma mark -
 
 #pragma mark NSObject
