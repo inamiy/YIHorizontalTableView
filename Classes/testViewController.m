@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     _tableView = [[YIHorizontalTableView alloc] init];
-    _tableView.frame = CGRectMake(50, 100, 200, 100);
+    _tableView.frame = CGRectMake(50, 300, 200, 100);
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.scrollIndicatorPosition = YIHorizontalTableViewScrollIndicatorPositionBottom;
@@ -43,30 +43,44 @@
     [self.view addSubview:_tableView];
     [_tableView release];
     
-    {
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button addTarget:self action:@selector(handleButton:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:@"Select Index 10" forState:UIControlStateNormal];
-        [button sizeToFit];
-#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-        CGRect frame = button.frame;
-        frame.origin.y += 20;
-        button.frame = frame;
-#endif
-        [self.view addSubview:button];
-    }
+    NSArray* infos = @[
+                       @{
+                           @"title"    : @"selectRowAtIndex",
+                           @"selector" : @"handleSelectRow"
+                           },
+                       @{
+                           @"title"    : @"scrollRectToVisible",
+                           @"selector" : @"handleScrollRectToVisible"
+                           },
+                       @{
+                           @"title"    : @"setContentOffset",
+                           @"selector" : @"handleSetContentOffset"
+                           },
+                       @{
+                           @"title"    : @"setContentOffset+animated",
+                           @"selector" : @"handleSetContentOffsetAnimated"
+                           },
+                       ];
     
-    {
-        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [button addTarget:self action:@selector(handleScrollButton:) forControlEvents:UIControlEventTouchUpInside];
-        [button setTitle:@"Scroll to visible" forState:UIControlStateNormal];
-        [button sizeToFit];
+    CGFloat top = 0;
 #if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
-        CGRect frame = button.frame;
-        frame.origin.x += 200;
-        frame.origin.y += 20;
-        button.frame = frame;
+    top = 20;
 #endif
+    for (NSDictionary* info in infos) {
+        UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [button addTarget:self
+                   action:NSSelectorFromString(info[@"selector"])
+         forControlEvents:UIControlEventTouchUpInside];
+        [button setTitle:info[@"title"] forState:UIControlStateNormal];
+        [button sizeToFit];
+
+        CGRect frame = button.frame;
+        frame.origin.x = 20;
+        frame.origin.y = top;
+        button.frame = frame;
+        
+        top += button.frame.size.height;
+        
         [self.view addSubview:button];
     }
 }
@@ -96,15 +110,25 @@
 
 #pragma mark UIButton
 
-- (void)handleButton:(UIButton*)button
+- (void)handleSelectRow
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:10 inSection:0];
     [_tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 
-- (void)handleScrollButton:(UIButton*)button
+- (void)handleScrollRectToVisible
 {
-    [_tableView scrollRectToVisible:CGRectMake(250, 0, 1, 1) animated:YES]; // NOTE: size={1,1} is required
+    [_tableView scrollRectToVisible:CGRectMake(250, 0, 1, 1) animated:YES];
+}
+
+- (void)handleSetContentOffset
+{
+    _tableView.yi_contentOffset = CGPointMake(300, 0);
+}
+
+- (void)handleSetContentOffsetAnimated
+{
+    [_tableView setContentOffset:CGPointMake(350, 0) animated:YES];
 }
 
 #pragma mark -
