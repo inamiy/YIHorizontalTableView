@@ -98,6 +98,13 @@
     return CGPointMake(contentOffset.y, -contentOffset.x);
 }
 
+// NOTE: 'setContentOffset:' cannot be overridden due to internal consistency
+- (void)setYi_contentOffset:(CGPoint)contentOffset
+{
+    CGPoint newOffset = CGPointMake(-contentOffset.y, contentOffset.x);
+    [super setContentOffset:newOffset];
+}
+
 #pragma mark -
 
 #pragma mark UIScrollView

@@ -38,6 +38,8 @@ typedef enum {
 - (UIEdgeInsets)yi_scrollIndicatorInsets;
 - (UIEdgeInsets)yi_contentInset;
 - (CGSize)yi_contentSize;
-- (CGPoint)yi_contentOffset;
+
+// NOTE: 'setContentOffset:' cannot be overridden due to internal consistency
+@property (nonatomic) CGPoint yi_contentOffset;
 
 @end
