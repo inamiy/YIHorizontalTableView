@@ -118,17 +118,17 @@
 
 - (void)handleScrollRectToVisible
 {
-    [_tableView scrollRectToVisible:CGRectMake(250, 0, 1, 1) animated:YES];
+    [_tableView scrollRectToVisible:CGRectMake(0, 250, 1, 1) animated:YES];
 }
 
 - (void)handleSetContentOffset
 {
-    _tableView.yi_contentOffset = CGPointMake(300, 0);
+    _tableView.contentOffset = CGPointMake(0, 300);
 }
 
 - (void)handleSetContentOffsetAnimated
 {
-    [_tableView setContentOffset:CGPointMake(350, 0) animated:YES];
+    [_tableView setContentOffset:CGPointMake(0, 350) animated:YES];
 }
 
 #pragma mark -
