@@ -41,16 +41,6 @@
     self.scrollIndicatorPosition = _scrollIndicatorPosition;
 }
 
-- (void)setScrollIndicatorInsets:(UIEdgeInsets)edgeInsets
-{
-    [super setScrollIndicatorInsets:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
-}
-
-- (void)setContentInset:(UIEdgeInsets)edgeInsets
-{
-    [super setContentInset:UIEdgeInsetsMake(edgeInsets.left, edgeInsets.bottom, edgeInsets.right, edgeInsets.top)];
-}
-
 - (void)setScrollIndicatorPosition:(YIHorizontalTableViewScrollIndicatorPosition)scrollIndicatorPosition
 {
     _scrollIndicatorPosition = scrollIndicatorPosition;
@@ -61,43 +51,9 @@
             break;
         case YIHorizontalTableViewScrollIndicatorPositionBottom:
         default:
-            self.scrollIndicatorInsets = UIEdgeInsetsMake(self.frame.size.height-10, 0, 0, 0);
+            self.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, self.frame.size.height-10);
             break;
     }
-}
-
-#pragma mark -
-
-#pragma mark UITableView
-
-- (void)selectRowAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated scrollPosition:(UITableViewScrollPosition)scrollPosition
-{
-    [super selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    
-    [self scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
-}
-
-- (void)scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated
-{
-    CGRect cellFrame = [self rectForRowAtIndexPath:indexPath];
-    
-    CGPoint offset = CGPointZero;
-    
-    switch (scrollPosition) {
-        case UITableViewScrollPositionTop:
-            offset = CGPointMake(0, cellFrame.origin.y);
-            break;
-        case UITableViewScrollPositionBottom:
-            offset = CGPointMake(0, cellFrame.origin.y-self.frame.size.width+cellFrame.size.height);
-            break;
-        case UITableViewScrollPositionMiddle:
-            offset = CGPointMake(0, cellFrame.origin.y+(-self.frame.size.width+cellFrame.size.height)/2);
-            break;
-        default:
-            return;
-            break;
-    }
-    [super setContentOffset:offset animated:animated];
 }
 
 #pragma mark -
