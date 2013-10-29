@@ -9,6 +9,14 @@
 #import "YIHorizontalTableView.h"
 #import <objc/runtime.h>
 
+#define IS_IOS_AT_LEAST(ver)    ([[[UIDevice currentDevice] systemVersion] compare:ver] != NSOrderedAscending)
+
+#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+#define IS_FLAT_DESIGN          IS_IOS_AT_LEAST(@"7.0")
+#else
+#define IS_FLAT_DESIGN          NO
+#endif
+
 
 @implementation YIHorizontalTableView
 
@@ -19,6 +27,10 @@
     self = [super initWithFrame:frame style:style];
     if (self) {
         self.frame = frame; // call custom setFrame
+        
+        if (IS_FLAT_DESIGN) {
+            self.separatorInset = UIEdgeInsetsZero;
+        }
     }
     return self;
 }
