@@ -28,9 +28,11 @@
     if (self) {
         self.frame = frame; // call custom setFrame
         
+#if defined(__IPHONE_7_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
         if (IS_FLAT_DESIGN) {
             self.separatorInset = UIEdgeInsetsZero;
         }
+#endif
     }
     return self;
 }
