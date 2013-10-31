@@ -38,6 +38,7 @@
     _tableView.frame = CGRectMake(50, 300, 200, 100);
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.contentInset = UIEdgeInsetsMake(200, 0, 200, 0);
     _tableView.scrollIndicatorPosition = YIHorizontalTableViewScrollIndicatorPositionBottom;
     
     [self.view addSubview:_tableView];
@@ -47,6 +48,10 @@
                        @{
                            @"title"    : @"selectRowAtIndex",
                            @"selector" : @"handleSelectRow"
+                           },
+                       @{
+                           @"title"    : @"scrollToRowAtIndexPath",
+                           @"selector" : @"handleScrollToRowAtIndexPath"
                            },
                        @{
                            @"title"    : @"scrollRectToVisible",
@@ -116,6 +121,12 @@
     [_tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 
+- (void)handleScrollToRowAtIndexPath
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:10 inSection:0];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
 - (void)handleScrollRectToVisible
 {
     [_tableView scrollRectToVisible:CGRectMake(0, 250, 1, 1) animated:YES];
@@ -164,6 +175,15 @@
 - (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
+#pragma mark -
+
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"offset = %f",scrollView.contentOffset.y);
 }
 
 @end

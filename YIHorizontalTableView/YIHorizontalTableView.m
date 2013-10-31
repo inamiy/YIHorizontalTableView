@@ -72,6 +72,39 @@
 
 #pragma mark -
 
+#pragma mark Override
+
+//
+// NOTE:
+// This code is required to properly perform 'selectRowAtIndexPath' & 'scrollToRowAtIndexPath',
+// when horizontalTableView.contentInset is set.
+//
+- (void)scrollToRowAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated
+{
+    CGRect rect = [self rectForRowAtIndexPath:indexPath];
+    
+    CGPoint offset = CGPointZero;
+    
+    switch (scrollPosition) {
+        case UITableViewScrollPositionTop:
+            offset = CGPointMake(0, rect.origin.y);
+            break;
+        case UITableViewScrollPositionBottom:
+            offset = CGPointMake(0, rect.origin.y-self.frame.size.width+rect.size.height);
+            break;
+        case UITableViewScrollPositionMiddle:
+            offset = CGPointMake(0, rect.origin.y+(-self.frame.size.width+rect.size.height)/2);
+            break;
+        default:
+            return;
+            break;
+    }
+    
+    [super setContentOffset:offset animated:animated];
+}
+
+#pragma mark -
+
 #pragma mark NSObject
 
 - (BOOL)respondsToSelector:(SEL)aSelector
